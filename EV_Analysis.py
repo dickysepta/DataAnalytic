@@ -5,6 +5,7 @@ import datetime as dt
 import streamlit as st
 print(pd)
 
+st.set_page_config(page_title='EV Analysis')
 st.title("ELECTRIC VEHICLE ANALYSIS")
 st.header("2017-2022")
 
