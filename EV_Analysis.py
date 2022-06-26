@@ -5,10 +5,6 @@ import datetime as dt
 import streamlit as st
 print(pd)
 
-# OPTIMIZING
-@st.cache(suppress_st_warning=True)
-@st.experimental_memo(ttl=60, max_entries=10)
-
 st.set_page_config(page_title='EV Analysis')
 st.title("ELECTRIC VEHICLE ANALYSIS")
 st.header("2017-2022")
