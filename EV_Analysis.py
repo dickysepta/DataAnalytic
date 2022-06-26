@@ -4,15 +4,15 @@ import plotly.express as px
 import datetime as dt
 import streamlit as st
 
-# EXPERIMENTAL MEMO
-@st.experimental_memo(ttl=60,max_entries=10)
 
 st.set_page_config(page_title='EV Analysis')
 st.title("ELECTRIC VEHICLE ANALYSIS")
 st.header("2017-2022")
 
 # READ FILE WITH FUNCTION TO OMPTIMIZING COMPUTATION
+@st.experimental_memo(ttl=60,max_entries=10)
 @st.cache(suppress_st_warning=True)  # 👈 Added this
+
 def read_masDat(): 
     return pd.read_csv("https://drive.google.com/uc?export=download&id=1FEodh3Mxo-tEG65rlQr9BNukNdvHJfEA",
                          sep=";")
