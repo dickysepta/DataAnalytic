@@ -3,15 +3,21 @@ import numpy as np
 import plotly.express as px
 import datetime as dt
 import streamlit as st
-print(pd)
+
+# EXPERIMENTAL MEMO
+@st.experimental_memo(ttl=60,max_entries=10)
 
 st.set_page_config(page_title='EV Analysis')
 st.title("ELECTRIC VEHICLE ANALYSIS")
 st.header("2017-2022")
 
-# READ FILE
-evMasDat=pd.read_csv("https://drive.google.com/uc?export=download&id=1FEodh3Mxo-tEG65rlQr9BNukNdvHJfEA",
-                    sep=";")
+# READ FILE WITH FUNCTION TO OMPTIMIZING COMPUTATION
+@st.cache(suppress_st_warning=True)  # 👈 Added this
+def read_masDat(): 
+    return pd.read_csv("https://drive.google.com/uc?export=download&id=1FEodh3Mxo-tEG65rlQr9BNukNdvHJfEA",
+                         sep=";")
+evMasDat=read_masDat()
+
 evMasDat=evMasDat.astype({"Date":"datetime64[ns]"})
 evMasDat['Year']=evMasDat['Date'].dt.year
 evMasDat['Month']=evMasDat['Date'].dt.month
@@ -82,7 +88,8 @@ vhcEVTotal=px.bar(gbVchTotal,x="Year",
                height=500,
                barmode="group")
 
-
-
 st.plotly_chart(vhcTotal)
 st.plotly_chart(vhcEVTotal)
+
+# CLEAR EXPERIMENTAL MEMOS
+st.experimental_memo.clear()
