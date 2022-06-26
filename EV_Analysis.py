@@ -105,8 +105,8 @@ vhcTotal=px.bar(gbVchTotal,x="Year",
 
 # PLOTING TOTAL EV
 vhcEVTotal=px.bar(gbVchTotal,x="Year",
-               y=listValue[0:2],
-               title="AMERICANS ELECTRIC VEHICLE TRENDS 2017-2022",
+               y=listValue[stVal:endVal],
+               title="AMERICANS ELECTRIC VEHICLE TRENDS 2017-2022 - " + selectValue,
                height=500,
                barmode="group")
 
