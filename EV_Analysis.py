@@ -25,6 +25,15 @@ evMasDat['Month']=evMasDat['Date'].dt.month
 # DESCRIBE
 evDesc=evMasDat.describe()
 
+# SIDEBAR SETUP
+selectDashboard = st.sidebar.selectbox(
+    "CHOOSE DASHBOARD :",
+    ("PROFILE", "DESCRIPTIVE ANALYTICS", "PREDICTIVE ANALYTICS"))
+
+selectDate = st.sidebar.date_input(
+     "CHOOSE DATA RANGE :",
+     value=(dt.date(2017, 1, 31),dt.date(2022, 5, 31)))
+
 # LIST SELECTION
 listVPU=evMasDat['Vehicle Primary Use'].sort_values(ascending=True).unique().tolist()
 listState=evMasDat['State'].sort_values(ascending=True).unique().tolist() ; listState.insert(0,"ALL")
@@ -90,6 +99,8 @@ vhcEVTotal=px.bar(gbVchTotal,x="Year",
 
 st.plotly_chart(vhcTotal)
 st.plotly_chart(vhcEVTotal)
+st.write("DESCRIBE ELECTRIC VEHICLE 2017-2022")
+st.dataframe(evDesc)
 
 # CLEAR EXPERIMENTAL MEMOS
 st.experimental_memo.clear()
