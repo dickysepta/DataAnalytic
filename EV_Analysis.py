@@ -97,10 +97,25 @@ vhcEVTotal=px.bar(gbVchTotal,x="Year",
                height=500,
                barmode="group")
 
+@st.cache(suppress_st_warning=True)
+def stat_year(): 
+    return evMasDat.groupby(['Year','State'])[listValue].sum().reset_index()
+gbStateTotal=stat_year()
+
+vhcStateYr=px.line(gbStateTotal,x="Year",
+               y=listValue[0:3],
+               title="AMREICANS ELECTRIC VEHICLE TRENDS BY STATE 2017-2022",
+               height=500,
+               color='State')
+
+# SHOW VISUALIZATION
 st.plotly_chart(vhcTotal)
 st.plotly_chart(vhcEVTotal)
+st.write("DETAILS ELECTRIC VEHICLE 2017-2022")
+st.dataframe(evMasDatFil)
 st.write("DESCRIBE ELECTRIC VEHICLE 2017-2022")
 st.dataframe(evDesc)
+st.plotly_chart(vhcStateYr)
 
 # CLEAR EXPERIMENTAL MEMOS
 st.experimental_memo.clear()
