@@ -26,13 +26,15 @@ evMasDat['Month']=evMasDat['Date'].dt.month
 evDesc=evMasDat.describe()
 
 # SIDEBAR SETUP
+st.sidebar.title("CONTROL PAGE")
 selectDashboard = st.sidebar.selectbox(
     "CHOOSE DASHBOARD :",
-    ("PROFILE", "DESCRIPTIVE ANALYTICS", "PREDICTIVE ANALYTICS"))
+    ("DESCRIPTIVE ANALYTICS", "PREDICTIVE ANALYTICS","PROFILE"))
 
 selectDate = st.sidebar.date_input(
      "CHOOSE DATA RANGE :",
      value=(dt.date(2017, 1, 31),dt.date(2022, 5, 31)))
+st.sidebar.write("Select Date temporarely not running for a while..")
 
 # LIST SELECTION
 listVPU=evMasDat['Vehicle Primary Use'].sort_values(ascending=True).unique().tolist()
@@ -109,13 +111,21 @@ vhcStateYr=px.line(gbStateTotal,x="Year",
                color='State')
 
 # SHOW VISUALIZATION
-st.plotly_chart(vhcTotal)
-st.plotly_chart(vhcEVTotal)
-st.write("DETAILS ELECTRIC VEHICLE 2017-2022")
-st.dataframe(evMasDatFil)
-st.write("DESCRIBE ELECTRIC VEHICLE 2017-2022")
-st.dataframe(evDesc)
-st.plotly_chart(vhcStateYr)
+if selectDashboard ==  "DESCRIPTIVE ANALYTICS" :
+    st.header("DESCRIPTIVE ANALYTICS PAGES")
+    st.plotly_chart(vhcTotal)
+    st.plotly_chart(vhcEVTotal)
+    st.write("DETAILS ELECTRIC VEHICLE 2017-2022")
+    st.dataframe(evMasDatFil)
+    st.write("DESCRIBE ELECTRIC VEHICLE 2017-2022")
+    st.dataframe(evDesc)
+    st.plotly_chart(vhcStateYr)
+elif selectDashboard ==  "PREDICTIVE ANALYTICS" :
+    st.header("PREDICTIVE ANALYTICS PAGES - IN PROGRESS MODELING")
+else:
+    st.header("PROFILE PAGES")
+    st.write("visit my github repository at : https://github.com/dickysepta")
+
 
 # CLEAR EXPERIMENTAL MEMOS
 st.experimental_memo.clear()
