@@ -36,6 +36,16 @@ selectDate = st.sidebar.date_input(
      value=(dt.date(2017, 1, 31),dt.date(2022, 5, 31)))
 st.sidebar.write("Select Date temporarely not running for a while..")
 
+selectValue = st.sidebar.radio(
+     "SELECT VALUE :",
+     ('PHEV-EV TOTAL', 'EV-NON EV TOTAL'))
+
+if selectValue == 'PHEV-EV TOTAL':
+    stVal,endVal=0,2
+else:
+    stVal,endVal=2,4
+
+
 # LIST SELECTION
 listVPU=evMasDat['Vehicle Primary Use'].sort_values(ascending=True).unique().tolist()
 listState=evMasDat['State'].sort_values(ascending=True).unique().tolist() ; listState.insert(0,"ALL")
@@ -45,6 +55,7 @@ listCountry=evMasDat['County'].sort_values(ascending=True).unique().tolist(); li
 listValue=evMasDat[['Plug-In Hybrid Electric Vehicles (PHEVs)',
                    'Battery Electric Vehicles (BEVs)',
                    'Electric Vehicle (EV) Total',
+                   'Non-Electric Vehicle Total',
                    'Total Vehicles']].columns.values.tolist()
 
 # WIDGET
@@ -86,7 +97,7 @@ gbVchTotal=evMasDatFil.groupby(['Year','Month'])[listValue].sum().reset_index()
 
 #PLOTING TOTAL VEHICLE
 vhcTotal=px.bar(gbVchTotal,x="Year",
-               y=listValue[3],
+               y=listValue[4],
                title="AMERICANS VEHICLE TRENDS 2017-2022",
                color="Month",
                height=500,
@@ -94,7 +105,7 @@ vhcTotal=px.bar(gbVchTotal,x="Year",
 
 # PLOTING TOTAL EV
 vhcEVTotal=px.bar(gbVchTotal,x="Year",
-               y=listValue[0:3],
+               y=listValue[0:2],
                title="AMERICANS ELECTRIC VEHICLE TRENDS 2017-2022",
                height=500,
                barmode="group")
